@@ -38,3 +38,6 @@ out/
 
 ### Context ###
 .context
+
+### Uploaded files (runtime-generated, not source) ###
+uploads/
