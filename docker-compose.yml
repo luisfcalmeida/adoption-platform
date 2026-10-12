@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: adoption
+      POSTGRES_USER: adoption
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
