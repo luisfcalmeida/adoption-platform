@@ -40,7 +40,7 @@ public class Animal {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, name = "adoption_status")
-    private AdoptionStatus status = AdoptionStatus.AVAILABLE;
+    private AdoptionStatus adoptionStatus = AdoptionStatus.AVAILABLE;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
@@ -118,12 +118,12 @@ public class Animal {
         this.sex = sex;
     }
 
-    public AdoptionStatus getStatus() {
-        return status;
+    public AdoptionStatus getAdoptionStatus() {
+        return adoptionStatus;
     }
 
-    public void setStatus(AdoptionStatus status) {
-        this.status = status;
+    public void setAdoptionStatus(AdoptionStatus adoptionStatus) {
+        this.adoptionStatus = adoptionStatus;
     }
 
     public LocalDate getBirthDate() {
