@@ -12,6 +12,7 @@ A web platform that connects animal rescue associations with people looking to a
 ## API endpoints
 - `GET /api/animals`: returns all animals
 - `GET /api/animals/{id}`: returns a single animal by its id (200 if it exists, 404 if it doesn't)
+- `POST /api/animals`: creates an animal (201 if created, 400 if the data is invalid)
 
 ## MVP Scope
 
