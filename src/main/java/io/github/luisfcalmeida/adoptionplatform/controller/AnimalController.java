@@ -1,12 +1,12 @@
 package io.github.luisfcalmeida.adoptionplatform.controller;
 
+import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
 import io.github.luisfcalmeida.adoptionplatform.service.AnimalService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +35,11 @@ public class AnimalController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @PostMapping
+    public ResponseEntity<Animal> saveAnimal(@Valid @RequestBody CreateAnimalRequest request) {
+        Animal createdAnimal = animalService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdAnimal);
     }
 }
