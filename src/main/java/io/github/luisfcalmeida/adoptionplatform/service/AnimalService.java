@@ -1,5 +1,6 @@
 package io.github.luisfcalmeida.adoptionplatform.service;
 
+import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
 import io.github.luisfcalmeida.adoptionplatform.repository.AnimalRepository;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,18 @@ public class AnimalService {
 
     public Optional<Animal> findById(Long id) {
         return animalRepository.findById(id);
+    }
+
+    public Animal create(CreateAnimalRequest createAnimalRequest) {
+        Animal animal = new Animal(
+                createAnimalRequest.name(),
+                createAnimalRequest.description(),
+                createAnimalRequest.photoUrl(),
+                createAnimalRequest.species(),
+                createAnimalRequest.size(),
+                createAnimalRequest.sex(),
+                createAnimalRequest.birthDate()
+        );
+        return animalRepository.save(animal);
     }
 }
