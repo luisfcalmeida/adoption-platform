@@ -26,31 +26,31 @@ public class AnimalService {
         return animalRepository.findById(id);
     }
 
-    public Animal create(CreateAnimalRequest createAnimalRequest) {
+    public Animal create(CreateAnimalRequest request) {
         Animal animal = new Animal(
-                createAnimalRequest.name(),
-                createAnimalRequest.description(),
-                createAnimalRequest.photoUrl(),
-                createAnimalRequest.species(),
-                createAnimalRequest.size(),
-                createAnimalRequest.sex(),
-                createAnimalRequest.birthDate()
+                request.name(),
+                request.description(),
+                request.photoUrl(),
+                request.species(),
+                request.size(),
+                request.sex(),
+                request.birthDate()
         );
         return animalRepository.save(animal);
     }
 
-    public Optional<Animal> update(Long id, UpdateAnimalRequest updateAnimalRequest) {
+    public Optional<Animal> update(Long id, UpdateAnimalRequest request) {
         Optional<Animal> optionalAnimal = animalRepository.findById(id);
 
         if (optionalAnimal.isPresent()) {
             Animal animal = optionalAnimal.get();
-            animal.setName(updateAnimalRequest.name());
-            animal.setDescription(updateAnimalRequest.description());
-            animal.setPhotoUrl(updateAnimalRequest.photoUrl());
-            animal.setSpecies(updateAnimalRequest.species());
-            animal.setSize(updateAnimalRequest.size());
-            animal.setSex(updateAnimalRequest.sex());
-            animal.setBirthDate(updateAnimalRequest.birthDate());
+            animal.setName(request.name());
+            animal.setDescription(request.description());
+            animal.setPhotoUrl(request.photoUrl());
+            animal.setSpecies(request.species());
+            animal.setSize(request.size());
+            animal.setSex(request.sex());
+            animal.setBirthDate(request.birthDate());
             return Optional.of(animalRepository.save(animal));
         } else {
             return Optional.empty();

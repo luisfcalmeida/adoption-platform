@@ -29,10 +29,9 @@ public class AnimalController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Animal> getAnimalById(@PathVariable Long id) {
-        Optional<Animal> animal = animalService.findById(id);
-
-        if (animal.isPresent()) {
-            return ResponseEntity.ok(animal.get());
+        Optional<Animal> optionalAnimal = animalService.findById(id);
+        if (optionalAnimal.isPresent()) {
+            return ResponseEntity.ok(optionalAnimal.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -46,9 +45,9 @@ public class AnimalController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @Valid @RequestBody UpdateAnimalRequest request) {
-        Optional<Animal> animal = animalService.update(id, request);
-        if (animal.isPresent()) {
-            return ResponseEntity.ok(animal.get());
+        Optional<Animal> optionalAnimal = animalService.update(id, request);
+        if (optionalAnimal.isPresent()) {
+            return ResponseEntity.ok(optionalAnimal.get());
         } else {
             return ResponseEntity.notFound().build();
         }
