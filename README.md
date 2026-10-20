@@ -13,6 +13,7 @@ A web platform that connects animal rescue associations with people looking to a
 - `GET /api/animals`: returns all animals
 - `GET /api/animals/{id}`: returns a single animal by its id (200 if it exists, 404 if it doesn't)
 - `POST /api/animals`: creates an animal (201 if created, 400 if the data is invalid)
+- `PUT /api/animals/{id}`: replaces an animal's data; optional fields that are omitted are cleared (200 if updated, 400 if the data is invalid, 404 if the animal is not found)
 
 ## MVP Scope
 
@@ -42,7 +43,7 @@ A web platform that connects animal rescue associations with people looking to a
 - Hosting: TBD
 
 ## Milestones
-1. Animal CRUD + PostgreSQL + first deploy (in progress: read endpoints done)
+1. Animal CRUD + PostgreSQL + first deploy (in progress: list, detail, create and update done)
 2. React: animal list + profile, connected to the API
 3. Association login + animal management
 4. Adoption applications (submit + review)
