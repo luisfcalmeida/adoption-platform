@@ -1,6 +1,7 @@
 package io.github.luisfcalmeida.adoptionplatform.controller;
 
 import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
+import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
 import io.github.luisfcalmeida.adoptionplatform.service.AnimalService;
 import jakarta.validation.Valid;
@@ -28,10 +29,9 @@ public class AnimalController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Animal> getAnimalById(@PathVariable Long id) {
-        Optional<Animal> animal = animalService.findById(id);
-
-        if (animal.isPresent()) {
-            return ResponseEntity.ok(animal.get());
+        Optional<Animal> optionalAnimal = animalService.findById(id);
+        if (optionalAnimal.isPresent()) {
+            return ResponseEntity.ok(optionalAnimal.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -41,5 +41,15 @@ public class AnimalController {
     public ResponseEntity<Animal> createAnimal(@Valid @RequestBody CreateAnimalRequest request) {
         Animal createdAnimal = animalService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAnimal);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @Valid @RequestBody UpdateAnimalRequest request) {
+        Optional<Animal> optionalAnimal = animalService.update(id, request);
+        if (optionalAnimal.isPresent()) {
+            return ResponseEntity.ok(optionalAnimal.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

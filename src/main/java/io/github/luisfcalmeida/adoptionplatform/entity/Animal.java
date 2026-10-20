@@ -39,7 +39,7 @@ public class Animal {
     private AnimalSex sex;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "adoption_status")
+    @Column(name = "adoption_status", nullable = false)
     private AdoptionStatus adoptionStatus = AdoptionStatus.AVAILABLE;
 
     @Column(name = "birth_date")
