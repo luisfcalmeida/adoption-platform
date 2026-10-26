@@ -1,6 +1,7 @@
 package io.github.luisfcalmeida.adoptionplatform.controller;
 
 import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
+import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAdoptionStatusRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
 import io.github.luisfcalmeida.adoptionplatform.service.AnimalService;
@@ -46,6 +47,16 @@ public class AnimalController {
     @PutMapping("/{id}")
     public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @Valid @RequestBody UpdateAnimalRequest request) {
         Optional<Animal> optionalAnimal = animalService.update(id, request);
+        if (optionalAnimal.isPresent()) {
+            return ResponseEntity.ok(optionalAnimal.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<Animal> updateAdoptionStatus(@PathVariable Long id, @Valid @RequestBody UpdateAdoptionStatusRequest request) {
+        Optional<Animal> optionalAnimal = animalService.updateAdoptionStatus(id, request);
         if (optionalAnimal.isPresent()) {
             return ResponseEntity.ok(optionalAnimal.get());
         } else {
