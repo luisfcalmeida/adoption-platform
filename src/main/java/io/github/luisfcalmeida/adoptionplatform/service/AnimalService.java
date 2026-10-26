@@ -1,6 +1,7 @@
 package io.github.luisfcalmeida.adoptionplatform.service;
 
 import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
+import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAdoptionStatusRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
 import io.github.luisfcalmeida.adoptionplatform.repository.AnimalRepository;
@@ -51,6 +52,18 @@ public class AnimalService {
             animal.setSize(request.size());
             animal.setSex(request.sex());
             animal.setBirthDate(request.birthDate());
+            return Optional.of(animalRepository.save(animal));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Animal> updateAdoptionStatus(Long id, UpdateAdoptionStatusRequest request) {
+        Optional<Animal> optionalAnimal = animalRepository.findById(id);
+
+        if (optionalAnimal.isPresent()) {
+            Animal animal = optionalAnimal.get();
+            animal.setAdoptionStatus(request.adoptionStatus());
             return Optional.of(animalRepository.save(animal));
         } else {
             return Optional.empty();
