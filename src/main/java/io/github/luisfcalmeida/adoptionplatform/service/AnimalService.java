@@ -69,4 +69,13 @@ public class AnimalService {
             return Optional.empty();
         }
     }
+
+    public boolean delete(Long id) {
+        if (animalRepository.existsById(id)) {
+            animalRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
