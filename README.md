@@ -17,6 +17,22 @@ A web platform that connects animal rescue associations with people looking to a
 - `PATCH /api/animals/{id}/status`: changes an animal's adoption status (200 if updated, 400 if the status is missing or invalid, 404 if the animal is not found)
 - `DELETE /api/animals/{id}`: deletes an animal (204 if deleted, 404 if the animal is not found)
 
+## Error responses
+All errors return the same format:
+
+```json
+{
+  "status": 400,
+  "message": "Validation failed",
+  "errors": {
+    "name": "must not be blank"
+  }
+}
+```
+
+- `Validation failed`: one or more fields are invalid; `errors` lists each field and its message
+- `Malformed JSON request`: the request body could not be read (invalid JSON or unknown enum value); `errors` is empty
+
 ## MVP Scope
 
 ### Public users (no account)
@@ -45,7 +61,7 @@ A web platform that connects animal rescue associations with people looking to a
 - Hosting: TBD
 
 ## Milestones
-1. Animal CRUD + PostgreSQL + first deploy (in progress: CRUD and status change done; deploy pending)
+1. Animal CRUD + PostgreSQL + first deploy (in progress: CRUD, status change and error handling done; deploy pending)
 2. React: animal list + profile, connected to the API
 3. Association login + animal management
 4. Adoption applications (submit + review)
