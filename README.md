@@ -2,6 +2,12 @@
 
 A web platform that connects animal rescue associations with people looking to adopt.
 
+**Live demo:** https://adoption-platform-2vli.onrender.com/api/animals
+
+**API docs (Swagger UI):** https://adoption-platform-2vli.onrender.com/swagger-ui.html
+
+> Hosted on a free tier: the first request after a period of inactivity may take up to a minute.
+
 ## How to run locally
 - Prerequisites: Java 21, Docker
 - Copy `.env.example` to `.env`
@@ -58,10 +64,10 @@ All errors return the same format:
 - Database: PostgreSQL
 - Frontend: React (planned)
 - Tooling: Docker, Gradle
-- Hosting: TBD
+- Hosting: Render (app, via Docker) + Neon (PostgreSQL)
 
 ## Milestones
-1. Animal CRUD + PostgreSQL + first deploy (in progress: CRUD, status change and error handling done; deploy pending)
+1. Animal CRUD + PostgreSQL + first deploy (done)
 2. React: animal list + profile, connected to the API
 3. Association login + animal management
 4. Adoption applications (submit + review)
