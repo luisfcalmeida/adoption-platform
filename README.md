@@ -68,10 +68,10 @@ All errors return the same format:
 
 ## Milestones
 1. Animal CRUD + PostgreSQL + first deploy (done)
-2. React: animal list + profile, connected to the API
-3. Association login + animal management
-4. Adoption applications (submit + review)
-5. Unit tests, README polish, screenshots
+2. Associations + adoption applications (business rules + unit tests)
+3. Association login (Spring Security) + protected endpoints
+4. React: animal list + profile + application form, connected to the API
+5. README polish, screenshots
 
 ## Definition of Done
 - All MVP features work end-to-end
