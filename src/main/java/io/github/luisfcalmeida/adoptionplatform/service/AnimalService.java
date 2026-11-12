@@ -4,7 +4,10 @@ import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAdoptionStatusRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.entity.Animal;
+import io.github.luisfcalmeida.adoptionplatform.entity.Association;
+import io.github.luisfcalmeida.adoptionplatform.exception.ResourceNotFoundException;
 import io.github.luisfcalmeida.adoptionplatform.repository.AnimalRepository;
+import io.github.luisfcalmeida.adoptionplatform.repository.AssociationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +17,11 @@ import java.util.Optional;
 public class AnimalService {
 
     private final AnimalRepository animalRepository;
+    private final AssociationRepository associationRepository;
 
-    public AnimalService(AnimalRepository animalRepository) {
+    public AnimalService(AnimalRepository animalRepository, AssociationRepository associationRepository) {
         this.animalRepository = animalRepository;
+        this.associationRepository = associationRepository;
     }
 
     public List<Animal> findAll() {
@@ -28,6 +33,14 @@ public class AnimalService {
     }
 
     public Animal create(CreateAnimalRequest request) {
+        Optional<Association> optionalAssociation = associationRepository.findById(request.associationId());
+
+        if (optionalAssociation.isEmpty()) {
+            throw new ResourceNotFoundException("Association not found with id " + request.associationId());
+        }
+
+        Association association = optionalAssociation.get();
+
         Animal animal = new Animal(
                 request.name(),
                 request.description(),
@@ -35,7 +48,8 @@ public class AnimalService {
                 request.species(),
                 request.size(),
                 request.sex(),
-                request.birthDate()
+                request.birthDate(),
+                association
         );
         return animalRepository.save(animal);
     }

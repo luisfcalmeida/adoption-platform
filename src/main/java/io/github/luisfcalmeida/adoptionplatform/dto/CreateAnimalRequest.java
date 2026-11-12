@@ -17,5 +17,6 @@ public record CreateAnimalRequest(
         @NotNull AnimalSpecies species,
         AnimalSize size,
         @NotNull AnimalSex sex,
-        @PastOrPresent LocalDate birthDate) {
+        @PastOrPresent LocalDate birthDate,
+        @NotNull Long associationId) {
 }

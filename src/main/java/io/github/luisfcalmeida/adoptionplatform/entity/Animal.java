@@ -53,10 +53,14 @@ public class Animal {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "association_id", nullable = false)
+    private Association association;
+
     public Animal() {
     }
 
-    public Animal(String name, String description, String photoUrl, AnimalSpecies species, AnimalSize size, AnimalSex sex, LocalDate birthDate) {
+    public Animal(String name, String description, String photoUrl, AnimalSpecies species, AnimalSize size, AnimalSex sex, LocalDate birthDate, Association association) {
         this.name = name;
         this.description = description;
         this.photoUrl = photoUrl;
@@ -64,6 +68,7 @@ public class Animal {
         this.size = size;
         this.sex = sex;
         this.birthDate = birthDate;
+        this.association = association;
     }
 
     public Long getId() {
@@ -142,4 +147,7 @@ public class Animal {
         return updatedAt;
     }
 
+    public Association getAssociation() {
+        return association;
+    }
 }
