@@ -1,5 +1,6 @@
 package io.github.luisfcalmeida.adoptionplatform.controller;
 
+import io.github.luisfcalmeida.adoptionplatform.dto.AnimalResponse;
 import io.github.luisfcalmeida.adoptionplatform.dto.CreateAnimalRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAdoptionStatusRequest;
 import io.github.luisfcalmeida.adoptionplatform.dto.UpdateAnimalRequest;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,41 +26,48 @@ public class AnimalController {
     }
 
     @GetMapping
-    public List<Animal> getAnimals() {
-        return animalService.findAll();
+    public List<AnimalResponse> getAnimals() {
+        List<Animal> animals = animalService.findAll();
+        List<AnimalResponse> animalResponses = new ArrayList<>();
+
+        for (Animal animal : animals) {
+            animalResponses.add(AnimalResponse.from(animal));
+        }
+
+        return animalResponses;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Animal> getAnimalById(@PathVariable Long id) {
+    public ResponseEntity<AnimalResponse> getAnimalById(@PathVariable Long id) {
         Optional<Animal> optionalAnimal = animalService.findById(id);
         if (optionalAnimal.isPresent()) {
-            return ResponseEntity.ok(optionalAnimal.get());
+            return ResponseEntity.ok(AnimalResponse.from(optionalAnimal.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Animal> createAnimal(@Valid @RequestBody CreateAnimalRequest request) {
+    public ResponseEntity<AnimalResponse> createAnimal(@Valid @RequestBody CreateAnimalRequest request) {
         Animal createdAnimal = animalService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdAnimal);
+        return ResponseEntity.status(HttpStatus.CREATED).body(AnimalResponse.from(createdAnimal));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Animal> updateAnimal(@PathVariable Long id, @Valid @RequestBody UpdateAnimalRequest request) {
+    public ResponseEntity<AnimalResponse> updateAnimal(@PathVariable Long id, @Valid @RequestBody UpdateAnimalRequest request) {
         Optional<Animal> optionalAnimal = animalService.update(id, request);
         if (optionalAnimal.isPresent()) {
-            return ResponseEntity.ok(optionalAnimal.get());
+            return ResponseEntity.ok(AnimalResponse.from(optionalAnimal.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PatchMapping("/{id}/status")
-    public ResponseEntity<Animal> updateAdoptionStatus(@PathVariable Long id, @Valid @RequestBody UpdateAdoptionStatusRequest request) {
+    public ResponseEntity<AnimalResponse> updateAdoptionStatus(@PathVariable Long id, @Valid @RequestBody UpdateAdoptionStatusRequest request) {
         Optional<Animal> optionalAnimal = animalService.updateAdoptionStatus(id, request);
         if (optionalAnimal.isPresent()) {
-            return ResponseEntity.ok(optionalAnimal.get());
+            return ResponseEntity.ok(AnimalResponse.from(optionalAnimal.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
