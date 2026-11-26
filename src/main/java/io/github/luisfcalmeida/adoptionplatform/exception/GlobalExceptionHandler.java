@@ -45,4 +45,13 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
+
+    @ExceptionHandler(BusinessRuleException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessRuleException(BusinessRuleException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage(), errors);
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
 }
