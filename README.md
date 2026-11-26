@@ -22,6 +22,7 @@ A web platform that connects animal rescue associations with people looking to a
 - `PUT /api/animals/{id}`: replaces an animal's data; optional fields that are omitted are cleared (200 if updated, 400 if the data is invalid, 404 if the animal is not found)
 - `PATCH /api/animals/{id}/status`: changes an animal's adoption status (200 if updated, 400 if the status is missing or invalid, 404 if the animal is not found)
 - `DELETE /api/animals/{id}`: deletes an animal (204 if deleted, 404 if the animal is not found)
+- `POST /api/animals/{animalId}/applications`: submits an adoption application for an animal (201 if submitted, 400 if the data is invalid, 404 if the animal is not found, 409 if the animal is not available for adoption)
 
 ## Error responses
 All errors return the same format:
@@ -39,6 +40,7 @@ All errors return the same format:
 - `Validation failed`: one or more fields are invalid; `errors` lists each field and its message
 - `Malformed JSON request`: the request body could not be read (invalid JSON or unknown enum value); `errors` is empty
 - `<Resource> not found with id <id>` (404): a referenced resource does not exist, e.g. `"Association not found with id 999"`; `errors` is empty
+- Business rule violation (409): the request conflicts with the current state of a resource, e.g. `"Animal with id 3 is not available for adoption."`; `errors` is empty
 
 ## MVP Scope
 
@@ -69,7 +71,7 @@ All errors return the same format:
 
 ## Milestones
 1. Animal CRUD + PostgreSQL + first deploy (done)
-2. Associations + adoption applications (business rules + unit tests) (in progress: associations done)
+2. Associations + adoption applications (business rules + unit tests) (in progress: associations and application submission done)
 3. Association login (Spring Security) + protected endpoints
 4. React: animal list + profile + application form, connected to the API
 5. README polish, screenshots
